@@ -79,7 +79,7 @@ void SetDegrees(QString &degrees, QString _degrees)
 {
     /**
      * @brief Устанавливает значение переменной degrees
-     * @param degrees Ссылка на переменную degrees
+     * @param degrees ссылка на строковую переменную для хранения единиц измерения температуры
      * @param _degrees Новое значение для переменной degrees
      */
     degrees = _degrees;
