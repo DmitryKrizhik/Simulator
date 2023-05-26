@@ -282,7 +282,7 @@ void MainWindow::on_PressureSlider_valueChanged(int value) //Handles position ch
      * Функция проверяет текущую единицу измерения (килопаскали или миллиметры ртутного столба) и в зависимости от
      * выбора пользователя пересчитывает значение давления.
      * Результат записывается в переменную pressure и отображается на экране в соответствующей единице измерения.
-     * @see SetPressure
+     * @see SetPressure()
      */
     if(pressureUnit == "Kilopascals")
     {
