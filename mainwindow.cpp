@@ -156,6 +156,7 @@ void MainWindow::on_TemperatureBox_activated(int index) //Handles the selection 
      * Функция проверяет выбранную единицу измерения и текущее значение переменной degrees.
      * В зависимости от этого она устанавливает новое значение для переменной degrees и пересчитывает значение температуры.
      * Результат записывается в переменную temperature и отображается на экране.
+     * @see SetTemperature(), SetDegrees()
      */
     if(index == 0 && degrees == "")
     {
@@ -220,6 +221,7 @@ void MainWindow::on_TemperatureSlider_valueChanged(int value) //Handles position
      * @param value Новое значение слайдера
      * Функция проверяет текущую единицу измерения (Celsius, Kelvin или Fharenheit) и в зависимости от этого пересчитывает значение температуры.
      * Результат записывается в переменную temperature и отображается на экране в соответствующей единице измерения.
+     * @see SetTemperature()
      */
     if(degrees == "Celsius"){
         SetTemperature(temperature, value);
@@ -239,12 +241,12 @@ void MainWindow::on_TemperatureSlider_valueChanged(int value) //Handles position
 
 void MainWindow::on_PressureBox_activated(int index) //Handles the selection of the unit of measure in the PressureBox
 {
-
     /**
      * @brief Обрабатывает выбор единицы измерения давления в PressureBox
      * @param index Индекс выбранной единицы измерения
      * Функция проверяет текущую единицу измерения (Kilopascals или mm. of mercury) и в зависимости от выбора пользователя пересчитывает значение давления.
      * Результат записывается в переменную pressure и отображается на экране в соответствующей единице измерения.
+     * @see SetPressureUnit(), SetPressure()
      */
     if(index == 0 && pressureUnit == "")
     {
@@ -280,6 +282,7 @@ void MainWindow::on_PressureSlider_valueChanged(int value) //Handles position ch
      * Функция проверяет текущую единицу измерения (килопаскали или миллиметры ртутного столба) и в зависимости от
      * выбора пользователя пересчитывает значение давления.
      * Результат записывается в переменную pressure и отображается на экране в соответствующей единице измерения.
+     * @see SetPressure
      */
     if(pressureUnit == "Kilopascals")
     {
@@ -301,6 +304,7 @@ void MainWindow::on_AngleSlider_valueChanged(int value) //Handles position chang
      * @param value Значение, выбранное пользователем на слайдере
      * Функция вызывает функцию SetAngle, которая устанавливает значение угла поворота в соответствии с выбранным пользователем значением.
      * Затем функция проверяет значение выбранного пользователем угла поворота и, в зависимости от этого значения, выводит текстовое описание на экран.
+     * @see SetAngle()
      */
     SetAngle(angle, value);
     if(value == 0){
@@ -321,6 +325,7 @@ void MainWindow::on_HumiditySlider_valueChanged(int value) //Handles position ch
      * @param value Значение, выбранное пользователем на слайдере
      * Функция вызывает функцию SetHumidity, которая устанавливает значение влажности в соответствии с выбранным пользователем значением.
      * Затем функция выводит текстовое описание на экран, содержащее текущее значение влажности.
+     * @see SetHumidity()
      */
     SetHumidity(humidity, value);
     ui->HumidityLabel->setText("Humidity: " + QString::number(humidity) + "%");
@@ -338,6 +343,8 @@ void MainWindow::on_Turn_ON_OFF_clicked() //Handles the ON/OFF button.
      *
      * Если кнопка имеет надпись "Turn OFF", функция записывает значения параметров в XML-файл и вызывает функцию
      * TurnOFF, которая выключает устройство.
+     *
+     * @see SetTemperature(), SetPressure(), SetPressureUnit(), SetDegrees(), SetAngle(), SetHumidity(), TurnON(), TurnOFF()
      */
    QFile file("values.xml");
    if(ui->Turn_ON_OFF->text() == "Turn ON")
@@ -468,6 +475,7 @@ void MainWindow::on_ThemeBox_activated(int index) //Handles the color theme sele
      * @brief Обрабатывает выбор пользователем цветовой темы
      * Функция вызывается при изменении выбранной пользователем цветовой темы.
      * @param index Индекс выбранной пользователем цветовой темы
+     * @see setLight(), setDark(), SetTheme()
      */
     if(index == 0) { setLight(); SetTheme(theme, "Light");}
     else if( index == 1) { setDark(); SetTheme(theme, "Dark");}
@@ -516,6 +524,7 @@ void MainWindow::setLight() //Changes the color theme of the interface to light
      * @brief Изменяет цветовую тему интерфейса на светлую
      * Функция изменяет цвет фона окна, цвет кнопок, цвет текста на кнопках и цвет текста заголовка окна.
      * Затем вызывает функцию SetTheme() с указанием выбранной темы и названия "Light" и функцию setColorButton_ON_OFF().
+     * @see SetTheme(), setColorButton_ON_OFF()
      */
     QPalette pal = palette();
     pal.setColor(QPalette::Window, QColor(180, 186, 207));
@@ -533,6 +542,7 @@ void MainWindow::setDark() //Changes the color theme of the interface to dark
      * @brief Изменяет цветовую тему интерфейса на темную
      * Функция изменяет цвет фона окна, цвет кнопок, цвет текста на кнопках и цвет текста заголовка окна.
      * Затем вызывает функцию SetTheme() с указанием выбранной темы и названия "Dark" и функцию setColorButton_ON_OFF().
+     * @see SetTheme(), setColorButton_ON_OFF()
      */
     QPalette pal = palette();
     pal.setColor(QPalette::Window, QColor(99, 107, 133));
@@ -553,6 +563,7 @@ void MainWindow::TurnON() //ON the application and changes colors depending on t
      * Затем происходит обновление значений на слайдерах и метках для влажности, давления и температуры.
      * В зависимости от выбранной единицы измерения давления и температуры, значения на слайдерах и метках обновляются соответствующим образом.
      * Затем функция изменяет цвет текста на кнопках в зависимости от выбранной цветовой темы.
+     * @see SetState(), UnHiding(), setColorButton_ON_OFF(), 
      */
     UnHiding();
     SetEnabledTrue();
@@ -623,6 +634,7 @@ void MainWindow::TurnOFF() //OFF the application and changes colors depending on
      * Затем происходит обновление значений на слайдерах и метках для влажности, давления и температуры.
      * В зависимости от выбранной единицы измерения давления и температуры, значения на слайдерах и метках обновляются соответствующим образом.
      * Затем функция изменяет цвет текста на кнопках в зависимости от выбранной цветовой темы.
+     * @see Hiding(), SetState(), setColorButton_ON_OFF(), 
      */
     Hiding();
     SetEnabledFalse();
@@ -654,6 +666,7 @@ void MainWindow::SendResponse() //Sends a response to a request from the Softwar
      *
      * Функция устанавливает сервер для прослушивания всех IP-адресов на порту 8080.
      * При подключении нового клиента, функция считывает запрос и отправляет ответ в зависимости от запроса.
+     * @see UnHiding(), ButtonON(), Hiding(), ButtonOFF()
      */
     server.listen(QHostAddress::Any, 8080);
     connect(&server, &QTcpServer::newConnection, [&]() {
